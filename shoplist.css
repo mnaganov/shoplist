@@ -1,7 +1,11 @@
+* {
+  -webkit-user-select: none;
+}
+
 #list {
   -webkit-column-count: 2;
 }
 
 div.chosen {
-  text-decoration: underline;
+  color: #c00000;
 }
