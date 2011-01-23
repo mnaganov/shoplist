@@ -5,7 +5,7 @@ var Mode = {
 };
 
 var kClassChosen = "chosen";
-var kClassBuy = "buy";
+var kClassBought = "bought";
 var kClassGrayed = "grayed";
 
 function documentClick(event)
@@ -26,6 +26,13 @@ function itemClicked(element)
       element.removeStyleClass(kClassChosen);
     else
       element.addStyleClass(kClassChosen);
+  } else {
+    if (element.hasStyleClass(kClassGrayed))
+      return;
+    if (element.hasStyleClass(kClassBought))
+      element.removeStyleClass(kClassBought);
+    else
+      element.addStyleClass(kClassBought);
   }
 }
 
@@ -71,10 +78,9 @@ function switchToShopMode(list)
 {
   Mode.current = Mode.SHOP;
   for (var node = list.firstChild; node; node = node.nextSibling) {
-    if (node.hasStyleClass(kClassChosen)) {
+    if (node.hasStyleClass(kClassChosen))
       node.removeStyleClass(kClassChosen);
-      node.addStyleClass(kClassBuy);
-    } else
+    else
       node.addStyleClass(kClassGrayed);
   }
 }
