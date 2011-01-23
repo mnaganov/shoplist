@@ -84,3 +84,15 @@ function switchToShopMode(list)
       node.addStyleClass(kClassGrayed);
   }
 }
+
+function switchToHomeMode(list)
+{
+  Mode.current = Mode.HOME;
+  for (var node = list.firstChild; node; node = node.nextSibling) {
+    if (node.hasStyleClass(kClassGrayed))
+      node.removeStyleClass(kClassGrayed);
+    else
+      node.addStyleClass(kClassChosen);
+  }
+}
+

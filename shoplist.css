@@ -1,4 +1,5 @@
 * {
+  font-family: Helvetica;
   -webkit-user-select: none;
 }
 
@@ -21,4 +22,5 @@ div.bought {
 
 #switch {
   text-align: center;
+  background-color: #e0e0e0;
 }
