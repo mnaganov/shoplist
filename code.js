@@ -4,17 +4,40 @@ var Mode = {
   current: 1
 };
 
+var kClassChosen = "chosen";
+var kClassBuy = "buy";
+var kClassGrayed = "grayed";
+
 function documentClick(event)
 {
   var element = event.target;
-  if (!element || !element.hasStyleClass("item"))
+  if (!element)
     return;
-  var clss = "chosen";
+  if (element.hasStyleClass("item"))
+    itemClicked(element);
+  if (element.constructor === HTMLInputElement)
+    radioClicked(element);
+}
+
+function itemClicked(element)
+{
   if (Mode.current === Mode.HOME) {
-    if (element.hasStyleClass(clss))
-      element.removeStyleClass(clss);
+    if (element.hasStyleClass(kClassChosen))
+      element.removeStyleClass(kClassChosen);
     else
-      element.addStyleClass(clss);
+      element.addStyleClass(kClassChosen);
+  }
+}
+
+function radioClicked(element)
+{
+  var newMode = document.getElementById("home-switch").checked ? Mode.HOME : Mode.SHOP;
+  if (Mode.current !== newMode) {
+    var list = document.getElementById("list");
+    if (newMode === Mode.HOME)
+      switchToHomeMode(list);
+    else
+      switchToShopMode(list);
   }
 }
 
@@ -41,4 +64,17 @@ function onLoad()
     document.getElementById("list"),
     loadItems(items));
   document.onclick = documentClick;
+  document.getElementById("home-switch").checked = true;
+}
+
+function switchToShopMode(list)
+{
+  Mode.current = Mode.SHOP;
+  for (var node = list.firstChild; node; node = node.nextSibling) {
+    if (node.hasStyleClass(kClassChosen)) {
+      node.removeStyleClass(kClassChosen);
+      node.addStyleClass(kClassBuy);
+    } else
+      node.addStyleClass(kClassGrayed);
+  }
 }

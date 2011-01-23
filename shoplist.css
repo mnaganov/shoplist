@@ -9,3 +9,11 @@
 div.chosen {
   color: #c00000;
 }
+
+div.grayed {
+  color: #c0c0c0;
+}
+
+#switch {
+  text-align: center;
+}
