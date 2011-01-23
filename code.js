@@ -7,6 +7,7 @@ var Mode = {
 var kClassChosen = "chosen";
 var kClassBought = "bought";
 var kClassGrayed = "grayed";
+var kClassOptionSelected = "option-selected";
 
 function documentClick(event)
 {
@@ -17,6 +18,10 @@ function documentClick(event)
     itemClicked(element);
   if (element.constructor === HTMLInputElement)
     radioClicked(element);
+  if (element.previousSibling.constructor === HTMLInputElement) {
+    element.previousSibling.checked = true;
+    radioClicked(element.previousSibling);
+  }
 }
 
 function itemClicked(element)
@@ -77,11 +82,14 @@ function onLoad()
     loadItems(items));
   document.onclick = documentClick;
   document.getElementById("home-switch").checked = true;
+  document.getElementById("home-label").addStyleClass(kClassOptionSelected);
 }
 
 function switchToShopMode(list)
 {
   Mode.current = Mode.SHOP;
+  document.getElementById("home-label").removeStyleClass(kClassOptionSelected);
+  document.getElementById("shop-label").addStyleClass(kClassOptionSelected);
   for (var node = list.firstChild; node; node = node.nextSibling) {
     if (node.hasStyleClass(kClassChosen))
       node.removeStyleClass(kClassChosen);
@@ -93,6 +101,8 @@ function switchToShopMode(list)
 function switchToHomeMode(list)
 {
   Mode.current = Mode.HOME;
+  document.getElementById("home-label").addStyleClass(kClassOptionSelected);
+  document.getElementById("shop-label").removeStyleClass(kClassOptionSelected);
   for (var node = list.firstChild; node; node = node.nextSibling) {
     if (node.hasStyleClass(kClassGrayed))
       node.removeStyleClass(kClassGrayed);

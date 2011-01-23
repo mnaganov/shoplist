@@ -30,3 +30,7 @@ div.bought {
   text-align: center;
   background-color: #e0e0e0;
 }
+
+span.option-selected {
+  color: #0000e0;
+}
