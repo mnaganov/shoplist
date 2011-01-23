@@ -52,10 +52,15 @@ function loadItems(items)
 {
   var result = document.createDocumentFragment();
   for (var i = 0, l = items.length; i < l; ++i) {
-    var item = document.createElement("div");
-    item.textContent = items[i];
-    item.className = "item";
-    result.appendChild(item);
+    if (items[i]) {
+      var item = document.createElement("div");
+      item.textContent = items[i];
+      item.className = "item";
+      result.appendChild(item);
+    } else {
+      var separator = document.createElement("hr");
+      result.appendChild(separator);
+    }
   }
   return result;
 }

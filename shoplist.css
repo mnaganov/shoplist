@@ -20,6 +20,10 @@ div.bought {
   text-decoration: line-through;
 }
 
+#list hr {
+  border-style: none;
+}
+
 #switch {
   text-align: center;
   background-color: #e0e0e0;
