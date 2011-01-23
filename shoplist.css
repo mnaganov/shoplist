@@ -1,3 +1,7 @@
 #list {
   -webkit-column-count: 2;
 }
+
+div.chosen {
+  text-decoration: underline;
+}
