@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">Shoplist</string>
     <string name="reload">Reload</string>
+    <string name="reset">Reset</string>
 </resources>

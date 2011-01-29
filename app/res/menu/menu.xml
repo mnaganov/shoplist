@@ -2,5 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/reload"
           android:title="@string/reload" />
+    <item android:id="@+id/reset"
+          android:title="@string/reset" />
           <!-- android:icon="@drawable/ic_new_game" -->
 </menu>

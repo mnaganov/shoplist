@@ -52,6 +52,7 @@ function radioClicked(element)
       switchToHomeMode(list);
     else
       switchToShopMode(list);
+    saveState(list);
   }
 }
 
@@ -79,14 +80,23 @@ function displayItemsFragmentInList(list, fragment)
 
 function loadState(list)
 {
-  if (!("State" in this))
-    return;
-  var state = State.load().split(":");
-  for (var node = list.firstChild, i = 0, l = state.length; node && i < l; node = node.nextSibling) {    
+  if (!("Storage" in this))
+    return false;
+  var state = String.prototype.split.call(Storage.load(), ":");
+  if (state[0] == Mode.HOME) {
+    document.getElementById("home-switch").checked = true;
+    switchToHomeMode(list);
+  } else if (state[0] == Mode.SHOP) {
+    document.getElementById("shop-switch").checked = true;
+    switchToShopMode(list);
+  } else
+    return false;
+  for (var node = list.firstChild, i = 1, l = state.length; node && (i < l); node = node.nextSibling) {    
     if (node.hasStyleClass(kClassItem)) {
       node.className = state[i++];
     }
   }
+  return true;
 }
 
 function onLoad()
@@ -95,21 +105,23 @@ function onLoad()
     document.getElementById("list"),
     loadItems(items));
   document.onclick = documentClick;
-  document.getElementById("home-switch").checked = true;
-  document.getElementById("home-label").addStyleClass(kClassOptionSelected);
-  loadState(document.getElementById("list"));
+  if (!loadState(document.getElementById("list"))) {
+    document.getElementById("home-switch").checked = true;
+    document.getElementById("home-label").addStyleClass(kClassOptionSelected);
+  }
 }
 
 function saveState(list)
 {
-  if (!("State" in this))
+  if (!("Storage" in this))
     return;
   var state = [];
+  state.push(Mode.current);
   for (var node = list.firstChild; node; node = node.nextSibling) {    
     if (node.hasStyleClass(kClassItem))
       state.push(node.className);
   }
-  State.save(state.join(":"));
+  Storage.save(state.join(":"));
 }
 
 function switchToShopMode(list)
