@@ -7,6 +7,7 @@ var Mode = {
 var kClassChosen = "chosen";
 var kClassBought = "bought";
 var kClassGrayed = "grayed";
+var kClassItem = "item";
 var kClassOptionSelected = "option-selected";
 
 function documentClick(event)
@@ -14,7 +15,7 @@ function documentClick(event)
   var element = event.target;
   if (!element)
     return;
-  if (element.hasStyleClass("item"))
+  if (element.hasStyleClass(kClassItem))
     itemClicked(element);
   if (element.constructor === HTMLInputElement)
     radioClicked(element);
@@ -39,6 +40,7 @@ function itemClicked(element)
     else
       element.addStyleClass(kClassBought);
   }
+  saveState(document.getElementById("list"));
 }
 
 function radioClicked(element)
@@ -60,7 +62,7 @@ function loadItems(items)
     if (items[i]) {
       var item = document.createElement("div");
       item.textContent = items[i];
-      item.className = "item";
+      item.className = kClassItem;
       result.appendChild(item);
     } else {
       var separator = document.createElement("hr");
@@ -75,6 +77,18 @@ function displayItemsFragmentInList(list, fragment)
   list.appendChild(fragment.cloneNode(true));
 }
 
+function loadState(list)
+{
+  if (!("State" in this))
+    return;
+  var state = State.load().split(":");
+  for (var node = list.firstChild, i = 0, l = state.length; node && i < l; node = node.nextSibling) {    
+    if (node.hasStyleClass(kClassItem)) {
+      node.className = state[i++];
+    }
+  }
+}
+
 function onLoad()
 {
   displayItemsFragmentInList(
@@ -83,6 +97,19 @@ function onLoad()
   document.onclick = documentClick;
   document.getElementById("home-switch").checked = true;
   document.getElementById("home-label").addStyleClass(kClassOptionSelected);
+  loadState(document.getElementById("list"));
+}
+
+function saveState(list)
+{
+  if (!("State" in this))
+    return;
+  var state = [];
+  for (var node = list.firstChild; node; node = node.nextSibling) {    
+    if (node.hasStyleClass(kClassItem))
+      state.push(node.className);
+  }
+  State.save(state.join(":"));
 }
 
 function switchToShopMode(list)

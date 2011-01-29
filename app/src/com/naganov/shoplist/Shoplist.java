@@ -19,6 +19,7 @@ public class Shoplist extends Activity
     WebView myWebView = (WebView) findViewById(R.id.webview);
     WebSettings webSettings = myWebView.getSettings();
     webSettings.setJavaScriptEnabled(true);
+    myWebView.addJavascriptInterface(new Storage(this), "Storage");
     myWebView.clearCache(true);
     myWebView.loadUrl("http://192.168.1.103/~mnaganov/shoplist/shoplist.html");
   }
