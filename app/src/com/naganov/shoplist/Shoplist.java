@@ -24,6 +24,7 @@ public class Shoplist extends Activity
     WebView myWebView = (WebView) findViewById(R.id.webview);
     WebSettings webSettings = myWebView.getSettings();
     webSettings.setJavaScriptEnabled(true);
+    webSettings.setBuiltInZoomControls(true);
     myWebView.setWebChromeClient(new WebChromeClient() {
         public boolean onConsoleMessage(ConsoleMessage cm) {
           Log.d("Shoplist", cm.message() + " -- From line "
@@ -35,7 +36,7 @@ public class Shoplist extends Activity
     mStorage = new Storage(this);
     myWebView.addJavascriptInterface(mStorage, "Storage");
     myWebView.clearCache(true);
-    myWebView.loadUrl("http://192.168.1.103/~mnaganov/shoplist/shoplist.html");
+    myWebView.loadUrl("file:///android_asset/shoplist.html");
   }
 
   @Override
