@@ -39,6 +39,7 @@ function itemClicked(element)
       element.removeStyleClass(kClassBought);
     else
       element.addStyleClass(kClassBought);
+    updateDoneState(document.getElementById("list"));
   }
   saveState(document.getElementById("list"));
 }
@@ -135,6 +136,7 @@ function switchToShopMode(list)
     else
       node.addStyleClass(kClassGrayed);
   }
+  updateDoneState(list);
 }
 
 function switchToHomeMode(list)
@@ -148,5 +150,20 @@ function switchToHomeMode(list)
     else
       node.addStyleClass(kClassChosen);
   }
+  document.body.removeStyleClass("done");
 }
 
+function updateDoneState(list)
+{
+  var done = true;
+  for (var node = list.firstChild; node; node = node.nextSibling) {    
+    if (!node.hasStyleClass(kClassGrayed) && !node.hasStyleClass(kClassBought)) {
+      done = false;
+      break;
+    }
+  }
+  if (done)
+    document.body.addStyleClass("done");
+  else
+    document.body.removeStyleClass("done");
+}

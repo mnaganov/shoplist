@@ -7,6 +7,10 @@
   -webkit-column-count: 2;
 }
 
+body.done {
+  background-color: green;
+}
+
 div.chosen {
   color: #c00000;
 }
