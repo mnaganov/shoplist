@@ -9,6 +9,7 @@ var kClassBought = "bought";
 var kClassGrayed = "grayed";
 var kClassItem = "item";
 var kClassOptionSelected = "option-selected";
+var kClassDone = "done";
 
 function documentClick(event)
 {
@@ -110,6 +111,8 @@ function onLoad()
     document.getElementById("home-switch").checked = true;
     document.getElementById("home-label").addStyleClass(kClassOptionSelected);
   }
+  if (Mode.current === Mode.SHOP)
+    updateDoneState(document.getElementById("list"));
 }
 
 function saveState(list)
@@ -150,7 +153,7 @@ function switchToHomeMode(list)
     else
       node.addStyleClass(kClassChosen);
   }
-  document.body.removeStyleClass("done");
+  document.body.removeStyleClass(kClassDone);
 }
 
 function updateDoneState(list)
@@ -163,7 +166,7 @@ function updateDoneState(list)
     }
   }
   if (done)
-    document.body.addStyleClass("done");
+    document.body.addStyleClass(kClassDone);
   else
-    document.body.removeStyleClass("done");
+    document.body.removeStyleClass(kClassDone);
 }
